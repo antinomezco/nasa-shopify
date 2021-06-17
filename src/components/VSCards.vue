@@ -49,7 +49,7 @@ body
   display: flex
   flex-flow: row wrap
   // justify-content: center
-  justify-content: space-evenly
+  align-content: flex-start
 
 .card-container:hover .card
   opacity: .7

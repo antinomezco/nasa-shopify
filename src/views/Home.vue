@@ -3,6 +3,7 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <Header />
     <Pagination />
+    <Footer />
   </div>
 </template>
 
@@ -10,12 +11,14 @@
 // @ is an alias to /src
 import Pagination from '@/components//Pagination.vue'
 import Header from '@/components//Header.vue'
+import Footer from '@/components//Footer.vue'
 
 export default {
   name: 'Home',
   components: {
     Pagination,
-    Header
+    Header,
+    Footer
   }
 }
 </script>

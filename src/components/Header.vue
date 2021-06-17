@@ -4,40 +4,48 @@
       <div class="bg-back"></div>
       <div
         class="bg"
-        style="background-image: url('https://www.foodserviceandhospitality.com/wp-content/uploads/2014/08/placeholder-003.jpg'); width: 100%; height: 100%;"
-      >
-        <div class="ui">
-          <div class="header">
-            <ul v-for="link in links" :key="link.name">
-              {{link.name}}
-            </ul>
-          </div>
-          <div class="main-hero">
-            <img src="../assets/chef.png" height="75px" width="75px" />
-            <div class="textAndButtons">
-              <p class="title">
-                La calavería
-              </p>
-              <p class="desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <p class="signature">
-                <img src="../assets/quill-drawing-a-line.png" height="75px" width="75px">
-              </p>
-              <div>
-                <a href="" class="login" v-if="!Loggein">
-                  Login
-                </a>
-                <a href="" class="login" v-else>
-                  Submit Recipe
-                </a>
-                <a href="" class="random">
-                  Random
-                </a>
-              </div>
+        style="background-image: url('https://www.foodserviceandhospitality.com/wp-content/uploads/2014/08/placeholder-003.jpg');"
+      ></div>
+      <div class="ui">
+        <div class="header">
+          <ul v-for="link in links" :key="link.name">
+            {{
+              link.name
+            }}
+          </ul>
+        </div>
+        <div class="main-hero">
+          <img src="../assets/chef.png" height="75px" width="75px" />
+          <div class="textAndButtons">
+            <p class="title">
+              La calavería
+            </p>
+            <p class="desc">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <p class="signature">
+              <img
+                src="../assets/quill-drawing-a-line.png"
+                height="75px"
+                width="75px"
+              />
+            </p>
+            <div>
+              <a href="" class="login" v-if="!Loggein">
+                Login
+              </a>
+              <a href="" class="login" v-else>
+                Submit Recipe
+              </a>
+              <a href="" class="random">
+                Random
+              </a>
             </div>
           </div>
         </div>
@@ -64,7 +72,7 @@ export default {
   text-align: left
   margin-top: -2rem
   margin-bottom: 2rem
-  padding-left: 2rem
+  padding-left: 1rem
 
 .header
   text-align: right
@@ -79,19 +87,29 @@ export default {
 .ui
   display: inline-block
   width: 100%
+  position: relative
 
-.bg
-  background-repeat: no-repeat
-  background-attachment: center
-  background-position: center
-  background-size: cover
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
-  mix-blend-mode: multiply
-  // filter: grayscale(100%)
-  z-index: -1
+.recipe-hero
+  position: relative
+  .bg
+    background-repeat: no-repeat
+    background-attachment: center
+    background-position: center
+    background-size: cover
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    position: absolute
+    mix-blend-mode: multiply
+    filter: grayscale(100%)
+  .bg-back
+    background: red
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    position: absolute
 
 .title
   font-weight: 100
