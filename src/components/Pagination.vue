@@ -50,7 +50,7 @@ export default {
       recipeName: this.$route.query.recipeName || "",
       projects: [],
       authToken: "",
-      web: "http://cookingdb.herokuapp.com/filterrecipes"
+      web: "https://cookingdb.herokuapp.com/filterrecipes"
     };
   },
   watch: {
