@@ -73,7 +73,7 @@ export default {
   padding-top: 1rem
 
 .input-container
-  width: 40%
+  max-width: 50%
   margin-left: auto
   margin-right: auto
   input
@@ -82,6 +82,7 @@ export default {
     margin: 0 auto
     width: 95%
     padding: 1rem
+    font-size: 1rem
   // input:active
   //   border: 2px solid red
 </style>
