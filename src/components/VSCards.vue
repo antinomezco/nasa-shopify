@@ -6,7 +6,7 @@
           <a>
             <div
               class="img"
-              :style="`background-image: linear-gradient(0deg,rgba(0, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0) 100%), url(${item.image}; width: 300px; max-width: 350px; height: 175px;`"
+              :style="`background-image: linear-gradient(0deg,rgba(0, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0) 100%), url(${item.image};`"
               src="https://via.placeholder.com/350x175/0000FF/808080"
               alt=""
             >
@@ -57,11 +57,12 @@ body
   filter: grayscale(1)
 .card-container .card
   margin: 10px
-  width: 300px
-  max-width: 350px
-  height: 175px
+  min-width: 300px 
+  width: 450px
+  min-height: 175px
+  height: 225px
   border-radius: 3px
-  // width: calc(100% / 4 - 20px)
+  // width: calc(100% / 5 - 20px)
   box-shadow: 0 0 2px 2px rgba(0,0,0,.05)
   background: #FFF
   -webkit-transition: .3s all ease
@@ -73,7 +74,8 @@ body
   filter: grayscale(0)
   transition: .35s all ease
 a .img
-  width: 100%
+  width: auto
+  height: 100%
   padding: 0
   margin: 0
   border-radius: 3px

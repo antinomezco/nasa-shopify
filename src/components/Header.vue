@@ -4,7 +4,7 @@
       <div class="bg-back"></div>
       <div
         class="bg"
-        style="background-image: url('https://www.foodserviceandhospitality.com/wp-content/uploads/2014/08/placeholder-003.jpg'); width: 100%; height: 560px;"
+        style="background-image: url('https://www.foodserviceandhospitality.com/wp-content/uploads/2014/08/placeholder-003.jpg'); width: 100%; height: 100%;"
       >
         <div class="ui">
           <div class="header">
@@ -62,6 +62,8 @@ export default {
   // display: inline-block
   flex-direction: column
   text-align: left
+  margin-top: -2rem
+  margin-bottom: 2rem
   padding-left: 2rem
 
 .header
@@ -102,9 +104,13 @@ export default {
   outline: 0
   box-sizing: border-box
 
-.title, .desc, .signature
+.title, .desc
   color: white
   text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000
+
+.signature
+  -webkit-filter: invert(1)
+  filter: invert(1)
 
 .login
   font-weight: 500
@@ -134,7 +140,7 @@ export default {
   color: black
 
 .textAndButtons
-  margin: 1.25rem 0
-  width: 35%
+  margin: 1.25rem 1rem
+  max-width: 600px
   line-height: 1.5rem
 </style>
