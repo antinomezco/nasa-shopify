@@ -59,10 +59,10 @@ body
   cursor: pointer
   filter: grayscale(1)
 .card-container .card
-  flex: 1 1 350px
+  flex: 2 1 350px
   margin: 10px
   // min-width: 300px 
-  max-width: 450px
+  max-width: 650px
   // min-height: 175px
   height: 225px
   border-radius: 3px

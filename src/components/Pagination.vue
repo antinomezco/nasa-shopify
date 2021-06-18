@@ -80,10 +80,16 @@ export default {
     border-radius: 5px
     border: 2px solid lightgray
     margin: 0 auto
-    width: 95%
+    width: 80%
     padding: 1rem
     font-size: 1rem
+    text-overflow: ellipsis
+    overflow: hidden
   input:focus
     border: 2px solid red
     outline: 0
+
+@media screen and (max-width: 1088px)
+  .input-container
+    max-width: 90%
 </style>

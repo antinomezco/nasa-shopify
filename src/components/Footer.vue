@@ -95,9 +95,9 @@ $medium: 900px
   display: flex
   width: 100%
   .links, .site
-    // padding-right: 7rem
+    padding-right: 7rem
     text-align: left
-    width: 25%
+    width: 50%
 
 li
   list-style: none
