@@ -48,18 +48,22 @@ body
   padding: 10px
   display: flex
   flex-flow: row wrap
-  // justify-content: center
-  align-content: flex-start
+  justify-content: center
+  // align-content: flex-start
+  
+  // margin-left: auto
+  // margin-right: auto
 
 .card-container:hover .card
   opacity: .7
   cursor: pointer
   filter: grayscale(1)
 .card-container .card
+  flex: 1 1 350px
   margin: 10px
-  min-width: 300px 
-  width: 450px
-  min-height: 175px
+  // min-width: 300px 
+  max-width: 450px
+  // min-height: 175px
   height: 225px
   border-radius: 3px
   // width: calc(100% / 5 - 20px)
