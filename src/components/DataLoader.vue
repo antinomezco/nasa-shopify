@@ -45,6 +45,7 @@
           this.error = null;
           this.loading = true;
           console.log("this.endpoint = ", this.endpoint)
+          console.log("process.env.VUE_APP_TEST_ENV: ", process.env.VUE_APP_TEST_ENV)
           let results = await this.axios.get(this.endpoint, {
             // headers: {
             //   'Authorization': `token ${this.authToken}`
