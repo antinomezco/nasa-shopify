@@ -8,7 +8,7 @@
       ></div>
       <div class="ui">
         <div class="header">
-          <ul v-for="link in links" :key="link.name">
+          <ul class="links-header" v-for="link in links" :key="link.name">
             {{
               link.name
             }}
@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .main-hero
   display: flex
   // display: inline-block
@@ -73,6 +73,8 @@ export default {
   margin-top: -2rem
   margin-bottom: 2rem
   padding-left: 1rem
+  img
+    padding: 0 0 0 .5rem
 
 .header
   text-align: right
@@ -83,6 +85,11 @@ export default {
     display: inline-block
     li
       list-style-type: none
+
+.links-header
+  color: white
+  padding: 0 1rem
+  font-size: 80%
 
 .ui
   display: inline-block

@@ -34,7 +34,7 @@
       </button>
     </div>
     <div class="pagination-row">
-      <span v-for="perPageOption in [5, 10, 25, 50]" :key="perPageOption">
+      <span v-for="perPageOption in [8, 16, 24]" :key="perPageOption">
         <button
           :class="['per-page-button', perPageOption == perPage ? 'active' : '']"
           @click="changePerPage(perPageOption)"
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       pageNumber: Number(this.$route.query.pageNumber) || 1,
-      perPage: this.$route.query.perPage || 10,
+      perPage: this.$route.query.perPage || 8,
     };
   },
   computed: {

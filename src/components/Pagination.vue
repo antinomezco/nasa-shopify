@@ -83,6 +83,7 @@ export default {
     width: 95%
     padding: 1rem
     font-size: 1rem
-  // input:active
-  //   border: 2px solid red
+  input:focus
+    border: 2px solid red
+    outline: 0
 </style>

@@ -25,5 +25,5 @@ export default {
 
 <style lang="sass" scoped>
 .home
-  background-color: lightgray
+  background-color: #efefef
 </style>
