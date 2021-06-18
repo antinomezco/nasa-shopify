@@ -4,7 +4,7 @@
       <div class="bg-back"></div>
       <div
         class="bg"
-        style="background-image: url('https://www.foodserviceandhospitality.com/wp-content/uploads/2014/08/placeholder-003.jpg');"
+        style="background-image: url('https://images.unsplash.com/photo-1523986371872-9d3ba2e2a389?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VtbWVyJTIwZm9vZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');"
       ></div>
       <div class="ui">
         <div class="header">
@@ -26,8 +26,7 @@
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
               reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              nulla pariatur. 
             </p>
             <p class="signature">
               <img
@@ -89,7 +88,7 @@ export default {
 .links-header
   color: white
   padding: 0 1rem
-  font-size: 80%
+  font-size: 90%
 
 .ui
   display: inline-block
