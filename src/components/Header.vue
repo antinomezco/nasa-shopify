@@ -75,6 +75,10 @@ export default {
   img
     padding: 0 0 0 .5rem
 
+@media screen and (max-width: 1088px)
+  .main-hero
+    padding-left: 0
+
 .header
   text-align: right
   margin-right: 1rem
