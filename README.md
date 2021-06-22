@@ -1,5 +1,19 @@
 # cookingscratch
 
+Simple recipe search website, inspired by The Skullery
+
+http://theskullery.net
+
+Uses Vue Router, Axios, lodash and dotenv.
+
+Recipe database connection is through REST to a custom API created in Django.
+
+Features to add
+
+1. Comments (where needed for clarification)
+2. User creation and login using Auth0
+3. CRUD
+
 ## Project setup
 ```
 npm install

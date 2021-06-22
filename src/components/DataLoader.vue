@@ -29,12 +29,15 @@
     },
     created(){
       this.findData()
-
+      // Instead of updating the data string sent to the database each time the string changes, 
+      // it waits X amount of time before starting a function.
+      // https://lodash.com/docs/#debounce
       this.updateEndpoint = _.debounce(function(){
         this.findData();
       }, 300)
     },
     watch: {
+      // Monitors the query which, with debounce, resets the timer in the function if there's an additional change during the alloted time.
       endpoint: function(){
         this.updateEndpoint();
       }
@@ -42,17 +45,17 @@
     methods: {
       async findData(){
         try {
+          // Using :endpoint="`${web}?recipe_name=${recipeName}`" prop from Pagination.vue, tries to load results from the database through Axios
           this.error = null;
-          this.loading = true;
-          console.log("this.endpoint = ", this.endpoint)
-          console.log("process.env.VUE_APP_TEST_ENV: ", process.env.VUE_APP_TEST_ENV)
+          this.loading = true; //while true, the loading slot will be active
           let results = await this.axios.get(this.endpoint, {
+            // in case there's headers needed, like for Django authentication
             // headers: {
             //   'Authorization': `token ${this.authToken}`
             // }
           });
+          // Once results are in this.data, they're used by Pagination.vue as a slot in <template #loaded="{data}">
           this.data = results.data;
-          console.log(this.data)
         } catch(e) {
           console.log(e);
           this.error = "This resource is not loading"
@@ -66,6 +69,7 @@
         type: String,
         required: true
       },
+      // authToken not needed at the moment
       authToken: {
         type: String,
         required: false

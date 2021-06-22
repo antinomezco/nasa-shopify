@@ -1,12 +1,13 @@
 <template>
   <div class="home">
     <div class="recipe-hero">
+      <!-- b-back, bg and ui are in 3 separate, but combined layers, on top of each other, check css for details  -->
       <div class="bg-back"></div>
       <div
         class="bg"
         style="background-image: url('https://images.unsplash.com/photo-1523986371872-9d3ba2e2a389?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VtbWVyJTIwZm9vZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');"
       ></div>
-      <div class="ui">
+      <div class="ui-container">
         <div class="header">
           <ul class="links-header" v-for="link in links" :key="link.name">
             {{
@@ -15,7 +16,7 @@
           </ul>
         </div>
         <div class="main-hero">
-          <img src="../assets/chef.png" height="75px" width="75px" />
+          <img class="hat" src="../assets/chef.png" height="75px" width="75px" />
           <div class="textAndButtons">
             <p class="title">
               La calavería
@@ -36,10 +37,10 @@
               />
             </p>
             <div>
-              <a href="" class="login" v-if="!Loggein">
+              <a href="" class="loginSubmit" v-if="!loggedIn">
                 Login
               </a>
-              <a href="" class="login" v-else>
+              <a href="" class="loginSubmit" v-else>
                 Submit Recipe
               </a>
               <a href="" class="random">
@@ -58,104 +59,114 @@ export default {
   data() {
     return {
       links: [{ name: "About" }, { name: "Tags" }, { name: "Favorites" }],
+      loggedIn: false
     };
   },
 };
 </script>
 
 <style lang="sass" scoped>
-.main-hero
-  display: flex
-  // display: inline-block
-  flex-direction: column
-  text-align: left
-  margin-top: -2rem
-  margin-bottom: 2rem
-  padding-left: 1rem
-  img
-    padding: 0 0 0 .5rem
+// Main component css
 
-@media screen and (max-width: 1088px)
-  .main-hero
-    padding-left: 0
+.recipe-hero
+  position: relative
 
+// Layered image and color transparency
+
+
+.bg
+  background-repeat: no-repeat
+  background-attachment: center
+  background-position: center
+  background-size: cover
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  position: absolute
+  mix-blend-mode: multiply
+  filter: grayscale(100%)
+.bg-back
+  background: red
+  width: 100%
+  height: 100%
+  top: 0
+  left: 0
+  position: absolute
+
+// Header links
 .header
   text-align: right
   margin-right: 1rem
   padding: 0 1rem
   ul
+    color: white
+    padding: 0 1rem
+    font-size: 90%
     margin: 1.6rem -.5rem
     display: inline-block
     li
       list-style-type: none
 
-.links-header
-  color: white
-  padding: 0 1rem
-  font-size: 90%
 
-.ui
+// Images and text in header
+
+.ui-container
   display: inline-block
   width: 100%
   position: relative
 
-.recipe-hero
-  position: relative
-  .bg
-    background-repeat: no-repeat
-    background-attachment: center
-    background-position: center
-    background-size: cover
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    position: absolute
-    mix-blend-mode: multiply
-    filter: grayscale(100%)
-  .bg-back
-    background: red
-    width: 100%
-    height: 100%
-    top: 0
-    left: 0
-    position: absolute
+.main-hero
+  display: flex
+  flex-direction: column
+  text-align: left
+  margin-top: -2rem
+  margin-bottom: 2rem
+  padding-left: 1rem
+  .hat
+    padding: 0 0 0 .5rem
+  .textAndButtons
+    margin: 1.25rem 1rem
+    max-width: 600px
+    line-height: 1.5rem
+    .title
+      font-weight: 100
+      font-size: 2rem
+      // max-width: 25rem
+      line-height: 1.2
+      width: 100%
+      margin-top: 0
+      margin-bottom: 1rem
+      outline: 0
+      box-sizing: border-box
+    .title, .desc
+      color: white
+      text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000
+    .signature
+      -webkit-filter: invert(1)
+      filter: invert(1)
 
-.title
-  font-weight: 100
-  font-size: 2rem
-  // max-width: 25rem
-  line-height: 1.2
-  width: 100%
-  margin-top: 0
-  margin-bottom: 1rem
-  outline: 0
-  box-sizing: border-box
+@media screen and (max-width: 1088px)
+  .main-hero
+    padding-left: 0
 
-.title, .desc
-  color: white
-  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000
+// Buttons
 
-.signature
-  -webkit-filter: invert(1)
-  filter: invert(1)
-
-.login
+.loginSubmit
   font-weight: 500
   margin-top: .5rem
   display: inline-block
   color: black
   background: linear-gradient(to bottom,#CCCC00 0,#999900 100%)
 
-.login:hover
+.loginSubmit:hover
   background: linear-gradient(to bottom,#999900 0,#666600 100%)
 
-.login, .random
+.loginSubmit, .random
   border-radius: 5px
   text-decoration: none
   padding: .75rem 2rem
   font-weight: 500
-
 
 .random
   margin-left: 1rem
@@ -166,9 +177,4 @@ export default {
 .random:hover
   background: white
   color: black
-
-.textAndButtons
-  margin: 1.25rem 1rem
-  max-width: 600px
-  line-height: 1.5rem
 </style>
