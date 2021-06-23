@@ -106,5 +106,5 @@ export default {
     font-size: 75%
     line-height: 1.5
     border-radius: .25rem
-    background-color: #FF6347
+    background-color: #FF7F50
 </style>

@@ -9,10 +9,9 @@
       ></div>
       <div class="ui-container">
         <div class="header">
-          <ul class="links-header" v-for="link in links" :key="link.name">
-            {{
-              link.name
-            }}
+          <ul class="links-header">
+            <li v-if="!$auth.isAuthenticated" @click="login">Log in/Sign up</li>
+            <li v-else @click="logout">Log out</li>
           </ul>
         </div>
         <div class="main-hero">
@@ -37,10 +36,7 @@
               />
             </p>
             <div>
-              <a href="" class="loginSubmit" v-if="!loggedIn">
-                Login
-              </a>
-              <a href="" class="loginSubmit" v-else>
+              <a href="" class="submit">
                 Submit Recipe
               </a>
               <a href="" class="random">
@@ -56,11 +52,14 @@
 
 <script>
 export default {
-  data() {
-    return {
-      links: [{ name: "About" }, { name: "Tags" }, { name: "Favorites" }],
-      loggedIn: false
-    };
+  methods: {
+    login() {
+      this.$auth.loginWithRedirect();
+    },
+    logout() {
+      this.$auth.logout();
+      this.$router.push({ path: "/" });
+    },
   },
 };
 </script>
@@ -104,9 +103,13 @@ export default {
     padding: 0 1rem
     font-size: 90%
     margin: 1.6rem -.5rem
-    display: inline-block
+    display: flex
+    justify-content: flex-end
     li
       list-style-type: none
+      padding: 0 1rem
+      cursor: pointer
+      
 
 
 // Images and text in header
@@ -152,17 +155,17 @@ export default {
 
 // Buttons
 
-.loginSubmit
+.submit
   font-weight: 500
   margin-top: .5rem
   display: inline-block
   color: black
   background: linear-gradient(to bottom,#CCCC00 0,#999900 100%)
 
-.loginSubmit:hover
+.submit:hover
   background: linear-gradient(to bottom,#999900 0,#666600 100%)
 
-.loginSubmit, .random
+.submit, .random
   border-radius: 5px
   text-decoration: none
   padding: .75rem 2rem

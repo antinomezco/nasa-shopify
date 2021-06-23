@@ -10,8 +10,7 @@ Recipe database connection is through REST to a custom API created in Django.
 
 Features to add
 
-1. User creation and login using Auth0
-2. CRUD
+1. CRUD
 
 ## Project setup
 ```
