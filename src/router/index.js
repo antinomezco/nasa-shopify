@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import OneRecipe from '../views/OneRecipe.vue'
+import AddRecipe from '../views/AddRecipe.vue'
 import { authenticationGuard } from "@/auth/authenticationGuard";
 
 Vue.use(VueRouter)
@@ -14,12 +16,15 @@ const routes = [
   {
     path: '/addrecipe',
     name: 'AddRecipe',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/AddRecipe.vue'),
+    component: AddRecipe,
     beforeEnter: authenticationGuard,
-  }
+  },
+  {
+    path: '/recipe/:slug',
+    name: 'OneRecipe',
+    props: true,
+    component: OneRecipe,
+  },
 ]
 
 const router = new VueRouter({

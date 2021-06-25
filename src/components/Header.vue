@@ -15,8 +15,8 @@
           </ul>
         </div>
         <div class="main-hero">
-          <img class="hat" src="../assets/chef.png" height="75px" width="75px" />
-          <div class="textAndButtons">
+          <img class="hat" src="../assets/chef.png"/>
+          <div class="text-and-buttons">
             <p class="title">
               La calavería
             </p>
@@ -128,7 +128,9 @@ export default {
   padding-left: 1rem
   .hat
     padding: 0 0 0 .5rem
-  .textAndButtons
+    height: 75px
+    width: 75px
+  .text-and-buttons
     margin: 1.25rem 1rem
     max-width: 600px
     line-height: 1.5rem

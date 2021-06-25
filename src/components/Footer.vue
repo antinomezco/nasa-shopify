@@ -20,7 +20,7 @@
             nibh nisl condimentum id venenatis a.
           </p>
         </div>
-        <div class="linksSite">
+        <div class="links-site">
           <div class="links">
             <div><strong>Links</strong></div>
             <ul>
@@ -94,7 +94,7 @@
 
 
 // Upper right on desktop, upper lower on mobile
-.linksSite
+.links-site
   display: flex
   width: 100%
   .links, .site
@@ -128,7 +128,7 @@
     width: 100%
     display: flex
     flex-direction: column
-  .linksSite
+  .links-site
     width: 100%
     .links, .site
       padding-left: 0

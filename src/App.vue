@@ -2,8 +2,20 @@
   <Spinner v-if="$auth.isLoading" />
   <div v-else id="app">
     <router-view/>
+    <Footer />
   </div>
 </template>
+
+<script>
+import Footer from '@/components//Footer.vue'
+import Spinner from '@/components//Spinner.vue'
+export default {
+  components: {
+    Spinner,
+    Footer
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -12,6 +24,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #efeeee;
 }
 
 html,body{
