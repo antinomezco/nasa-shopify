@@ -11,6 +11,10 @@ Recipe database connection is through REST to a custom API created in Django.
 Features to add
 
 1. CRUD
+  C) Pending
+  R) Can now click on a recipe to get its details
+  U) Pending
+  D) Pending
 
 ## Project setup
 ```

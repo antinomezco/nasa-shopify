@@ -1,6 +1,6 @@
 <template>
   <div class="one-recipe-hero">
-    <div class="one-recipe-container">
+    <form class="one-recipe-container">
       <router-link to="/">
         <img class="hat" src="../assets/chef.png"/>
       </router-link>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 

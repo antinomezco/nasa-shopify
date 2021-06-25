@@ -3,7 +3,7 @@
     <div class="card-container">
       <div v-for="item in items" :key="item.id" class="card">
         <slot name="item" :item="item">
-          <a>
+          <router-link :to="'/recipe/' + item.slug">
             <!-- pseudo image component contains all the code for dynamically showing the information in the database (item in items) -->
             <div
               class="img"
@@ -19,7 +19,7 @@
                 </h5>
               </div>
             </div>
-          </a>
+          </router-link>
         </slot>
       </div>
     </div>
@@ -47,6 +47,8 @@ export default {
   display: flex
   flex-flow: row wrap
   justify-content: center
+  a
+    text-decoration: none
   &:hover .card // When hovering in the .card-container area, all cards go grayscale
     opacity: .7
     cursor: pointer
