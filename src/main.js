@@ -6,7 +6,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { domain, clientId, audience } from "../auth_config.json";
 import { Auth0Plugin } from "@/auth/auth0-plugin";
+import { ValidationProvider } from 'vee-validate/dist/vee-validate.full.esm';
+import { ValidationObserver} from 'vee-validate'
 
+Vue.component('ValidationProvider', ValidationProvider)
+Vue.component('ValidationObserver', ValidationObserver)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 import axios from 'axios'

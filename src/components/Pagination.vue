@@ -54,7 +54,8 @@ export default {
     return {
       recipeName: this.$route.query.recipeName || "",
       authToken: "", // authToken is pending future usage with Django auth
-      web: "https://cookingdb.herokuapp.com/filterrecipes"
+      // web: "https://cookingdb.herokuapp.com/filterrecipes"
+      web: "http://127.0.0.1:8000/filterrecipes"
     };
   },
   watch: {

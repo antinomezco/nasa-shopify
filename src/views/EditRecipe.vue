@@ -1,76 +1,152 @@
 <template>
   <div class="one-recipe-hero">
-    <form class="one-recipe-container">
-      <router-link to="/">
-        <img class="hat" src="../assets/chef.png"/>
-      </router-link>
-      <div class="image-container">
-        <img :src="`${this.data.image}`" alt="" />
-      </div>
-      <div class="recipe-container">
-        <div class="recipe-title">
-          <h1>{{ this.data.recipe_name }}</h1>
-        </div>
-        <hr />
-        <div class="recipe-minutia" v-if="!loading">
-          <div class="recipe-minutia-left">
-            <div class="category">
-              <span class="recipe-minutia-title">Category: </span>{{ this.data.food_category.food_category_name }}
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <form
+        @submit.prevent="handleSubmit(onSubmit)"
+        class="one-recipe-container"
+      >
+        <!-- <router-link to="/">
+          <img class="hat" src="../assets/chef.png" />
+        </router-link> -->
+        <!-- <div class="image-container">
+          <img :src="`${this.data.image}`" alt="" />
+        </div> -->
+        <div class="recipe-container">
+          <ValidationProvider name="Name" rules="required" v-slot="{ errors }">
+            <div class="recipe-title form-group">
+              <input
+                v-model="formData.recipe_name"
+                class="form-control"
+                type="text"
+              />
+              <span>{{ errors[0] }}</span>
             </div>
-            <div class="added-by">
-              <span class="recipe-minutia-title">Added by: </span>{{ this.data.user.username }}
+          </ValidationProvider>
+          <hr />
+          <div class="recipe-minutia" v-if="!loading">
+            <div class="recipe-minutia-left">
+              <div class="category">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Course"
+                  rules="required"
+                >
+                  <span class="recipe-minutia-title">Category: </span>
+                  <select>
+                    <option
+                      v-for="(item, index) in food_categoryList.data"
+                      :key="index"
+                      :value="index"
+                      :selected="item.id === data.food_category.id"
+                    >
+                      {{ item.food_category_name }}
+                    </option>
+                  </select>
+                  <span>{{ errors[0] }}</span>
+                </validation-provider>
+                <!-- <span class="recipe-minutia-title">Category: </span
+                >{{ formData.food_category.food_category_name }} -->
+              </div>
+              <div class="added-by">
+                <span class="recipe-minutia-title">Added by: </span
+                >{{ formData.user.username }}
+              </div>
+            </div>
+            <div class="recipe-minutia-right">
+              <div class="time">
+                <span class="recipe-minutia-title">Prep time: </span>
+                <input v-model="formData.prep_time" /> |
+                <span class="recipe-minutia-title">Cook time: </span
+                ><input v-model="formData.cook_time" />
+              </div>
+              <div class="meal">
+                <span class="recipe-minutia-title">Meal: </span
+                >{{ formData.course.course_name }}
+              </div>
             </div>
           </div>
-          <div class="recipe-minutia-right">
-            <div class="time">
-              <span class="recipe-minutia-title">Prep time: </span> {{ this.data.prep_time }} | <span class="recipe-minutia-title">Cook time: </span>{{ this.data.cook_time }}
+          <hr />
+          <div class="recipe-details">
+            <div class="recipe-ingredients-directions">
+              <div class="recipe-ingredients">
+                <ValidationProvider
+                  name="Servings"
+                  rules="required"
+                  v-slot="{ errors }"
+                >
+                  <div class="form-group">
+                    <p class="ingredients-title">
+                      Ingredients for
+                      <input
+                        v-model="formData.servings"
+                        class="form-control"
+                        type="text"
+                      />
+                      servings
+                    </p>
+                    <span>{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
+                <ValidationProvider
+                  name="Ingredients"
+                  rules="required"
+                  v-slot="{ errors }"
+                >
+                  <div class="form-group">
+                    <textarea
+                      rows="10"
+                      cols="50"
+                      class="form-control"
+                      type="text"
+                      v-model="formData.ingredients_text"
+                    />
+                    <span>{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
+              </div>
+              <div class="recipe-directions">
+                <p class="directions-title">Directions</p>
+                <ValidationProvider
+                  name="Steps"
+                  rules="required"
+                  v-slot="{ errors }"
+                >
+                  <div class="form-group">
+                    <textarea
+                      rows="10"
+                      cols="50"
+                      class="form-control"
+                      type="text"
+                      v-model="formData.recipe_steps"
+                    />
+                    <span>{{ errors[0] }}</span>
+                  </div>
+                </ValidationProvider>
+              </div>
             </div>
-            <div class="meal">
-              <span class="recipe-minutia-title">Meal: </span>{{ this.data.course.course_name}} 
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div class="recipe-details">
-          <div class="recipe-ingredients-directions">
-            <!-- added v-if="!loading" to prevent v-for from trigerring an error 
-            before there's any data to iterate -->
-            <div class="recipe-ingredients" v-if="!loading">
-              <p class="ingredients-title">
-                Ingredients for {{ data.servings }} servings
-              </p>
-              <p
-                v-for="(ing, index) in data.ingredients_text.split('\r\n')"
-                :key="index"
-                class="ingredients-text"
+            <div class="recipe-notes" v-if="!loading">
+              <p class="notes-title" v-if="data.recipe_notes">Notes</p>
+              <ValidationProvider
+                name="Notes"
+                rules="required"
+                v-slot="{ errors }"
               >
-                {{ ing }}
-              </p>
+                <div class="form-group">
+                  <textarea
+                    rows="10"
+                    cols="50"
+                    class="form-control"
+                    type="text"
+                    v-model="formData.recipe_notes"
+                  />
+                  <span>{{ errors[0] }}</span>
+                </div>
+              </ValidationProvider>
             </div>
-            <div class="recipe-directions" v-if="!loading">
-              <p class="directions-title">Directions</p>
-              <p
-                v-for="(dir, index) in data.recipe_steps.split('\r\n')"
-                :key="index"
-                class="recipe-steps"
-              >
-                {{ dir }}
-              </p>
-            </div>
-          </div>
-          <div class="recipe-notes" v-if="!loading">
-            <p class="notes-title" v-if="data.recipe_notes">Notes</p>
-            <p
-              v-for="note in data.recipe_notes.split('\r\n')"
-              :key="note"
-              class="notes-steps"
-            >
-              {{ note }}
-            </p>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </ValidationObserver>
   </div>
 </template>
 
@@ -81,8 +157,26 @@ export default {
   },
   data() {
     return {
-      oneRecipe: "https://cookingdb.herokuapp.com/recipe/",
-      data: [],
+      // oneRecipe: "https://cookingdb.herokuapp.com/recipe/",
+      oneRecipe: "http://127.0.0.1:8000",
+      data: {},
+      formData: {
+        recipe_name: "",
+        prep_time: "",
+        cook_time: "",
+        servings: "",
+        image: "",
+        recipe_description: "",
+        ingredients_text: "",
+        recipe_steps: "",
+        recipe_notes: "",
+        course: "",
+        food_category: "",
+        cuisine: "",
+      },
+      courseList: [],
+      food_categoryList: [],
+      cuisineList: [],
     };
   },
   async created() {
@@ -91,14 +185,23 @@ export default {
       // and tries to load results from the database through Axios
       this.error = null;
       this.loading = true; //while true, the loading slot will be active
-      let results = await this.axios.get(this.oneRecipe + this.slug, {
-        // in case there's headers needed, like for Django authentication
-        // headers: {
-        //   'Authorization': `token ${this.authToken}`
-        // }
-      });
+      let results = await this.axios.get(
+        this.oneRecipe + "/recipe/" + this.slug,
+        {
+          // in case there's headers needed, like for Django authentication
+          // headers: {
+          //   'Authorization': `token ${this.authToken}`
+          // }
+        }
+      );
       // Once results are in this.data, they're ready to use
       this.data = results.data;
+      this.formData = results.data;
+      // this.formData.cuisine = this.data.cuisine.id;
+      // this.formData.food_category = this.data.food_category.id;
+      // this.formData.course = this.data.course.id;
+      const imageTemp = this.data.image;
+      const correctUser = this.data.user.sub;
       console.log("data: ", this.data);
     } catch (e) {
       console.log(e);
@@ -106,6 +209,49 @@ export default {
     }
 
     this.loading = false;
+  },
+  async mounted() {
+    let preCuisine = await this.axios.get(this.oneRecipe + "/allcuisines", {
+      // in case there's headers needed, like for Django authentication
+      // headers: {
+      //   'Authorization': `token ${this.authToken}`
+      // }
+    });
+    console.log("preCuisine");
+    console.log(preCuisine);
+    this.cuisineList = preCuisine;
+
+    let preFoodCategory = await this.axios.get(
+      this.oneRecipe + "/allfoodcategories",
+      {
+        // in case there's headers needed, like for Django authentication
+        // headers: {
+        //   'Authorization': `token ${this.authToken}`
+        // }
+      }
+    );
+    console.log("preFoodCategory");
+    console.log(preFoodCategory);
+    this.food_categoryList = preFoodCategory;
+
+    // this.ingredientList = ingredients
+
+    let preCourses = await this.axios.get(this.oneRecipe + "/allcourses", {
+      // in case there's headers needed, like for Django authentication
+      // headers: {
+      //   'Authorization': `token ${this.authToken}`
+      // }
+    });
+    console.log("preCourses ");
+    console.log(preCourses);
+    this.courseList = preCourses;
+
+    // console.log(this.formData);
+  },
+  methods: {
+    onSubmit() {
+      console.log(this.formData);
+    },
   },
 };
 </script>
@@ -125,7 +271,7 @@ export default {
 a
   position: absolute
   top: 2rem // adds padding on the top
-  display: block //makes it align to the left 
+  display: block //makes it align to the left
   .hat
     height: 75px
     width: 75px
