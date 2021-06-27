@@ -5,15 +5,22 @@
         @submit.prevent="handleSubmit(onSubmit)"
         class="one-recipe-container"
       >
-        <!-- <router-link to="/">
+        <router-link to="/">
           <img class="hat" src="../assets/chef.png" />
-        </router-link> -->
-        <!-- <div class="image-container">
-          <img :src="`${this.data.image}`" alt="" />
-        </div> -->
+        </router-link>
+        <div class="image-container">
+          <div
+            class="imagePreviewWrapper"
+            :style="{ 'background-image': `url(${formData.image})` }"
+            @click="selectImage"
+          ></div>
+          <!-- <img :src="`${formData.image}`" alt="" @click="pickFile" /> -->
+          <input ref="fileInput" type="file" @input="pickFile" v-show="false"/>
+        </div>
         <div class="recipe-container">
           <ValidationProvider name="Name" rules="required" v-slot="{ errors }">
             <div class="recipe-title form-group">
+              <h1><p>Recipe name</p></h1>
               <input
                 v-model="formData.recipe_name"
                 class="form-control"
@@ -28,16 +35,17 @@
               <div class="category">
                 <validation-provider
                   v-slot="{ errors }"
-                  name="Course"
+                  name="Category"
                   rules="required"
                 >
                   <span class="recipe-minutia-title">Category: </span>
-                  <select>
+                  <!-- v-model="formData.food_category" causes selected to not work anymore, find a binding workaround -->
+                  <select v-model="formData.food_category">
                     <option
                       v-for="(item, index) in food_categoryList.data"
                       :key="index"
-                      :value="index"
-                      :selected="item.id === data.food_category.id"
+                      :value="item.id"
+                      :selected="item.id === formData.food_category.id"
                     >
                       {{ item.food_category_name }}
                     </option>
@@ -49,7 +57,7 @@
               </div>
               <div class="added-by">
                 <span class="recipe-minutia-title">Added by: </span
-                >{{ formData.user.username }}
+                >{{ added_by.username }}
               </div>
             </div>
             <div class="recipe-minutia-right">
@@ -59,10 +67,25 @@
                 <span class="recipe-minutia-title">Cook time: </span
                 ><input v-model="formData.cook_time" />
               </div>
-              <div class="meal">
-                <span class="recipe-minutia-title">Meal: </span
-                >{{ formData.course.course_name }}
-              </div>
+              <validation-provider
+                  v-slot="{ errors }"
+                  name="Course"
+                  rules="required"
+                >
+                  <span class="recipe-minutia-title">Course: </span>
+                  <!-- v-model="formData.food_category" causes selected to not work anymore, find a binding workaround -->
+                  <select v-model="formData.course">
+                    <option
+                      v-for="(item, index) in courseList.data"
+                      :key="index"
+                      :value="item.id"
+                      :selected="item.id === formData.course.id"
+                    >
+                      {{ item.course_name }}
+                    </option>
+                  </select>
+                  <span>{{ errors[0] }}</span>
+                </validation-provider>
             </div>
           </div>
           <hr />
@@ -125,7 +148,7 @@
               </div>
             </div>
             <div class="recipe-notes" v-if="!loading">
-              <p class="notes-title" v-if="data.recipe_notes">Notes</p>
+              <p class="notes-title">Notes</p>
               <ValidationProvider
                 name="Notes"
                 rules="required"
@@ -145,6 +168,7 @@
             </div>
           </div>
         </div>
+        <button type="submit">Submit</button>
       </form>
     </ValidationObserver>
   </div>
@@ -159,7 +183,7 @@ export default {
     return {
       // oneRecipe: "https://cookingdb.herokuapp.com/recipe/",
       oneRecipe: "http://127.0.0.1:8000",
-      data: {},
+      data: [],
       formData: {
         recipe_name: "",
         prep_time: "",
@@ -177,6 +201,7 @@ export default {
       courseList: [],
       food_categoryList: [],
       cuisineList: [],
+      added_by: ""
     };
   },
   async created() {
@@ -196,12 +221,14 @@ export default {
       );
       // Once results are in this.data, they're ready to use
       this.data = results.data;
+      this.added_by = this.data.user;
       this.formData = results.data;
-      // this.formData.cuisine = this.data.cuisine.id;
-      // this.formData.food_category = this.data.food_category.id;
-      // this.formData.course = this.data.course.id;
-      const imageTemp = this.data.image;
-      const correctUser = this.data.user.sub;
+      this.formData.cuisine = this.data.cuisine.id;
+      this.formData.food_category = this.data.food_category.id;
+      this.formData.course = this.data.course.id;
+      this.formData.user = this.data.user.id;
+      // const imageTemp = this.data.image;
+      // const correctUser = this.data.user.sub;
       console.log("data: ", this.data);
     } catch (e) {
       console.log(e);
@@ -249,8 +276,27 @@ export default {
     // console.log(this.formData);
   },
   methods: {
-    onSubmit() {
+    selectImage() {
+      this.$refs.fileInput.click();
+    },
+    pickFile() {
+      let input = this.$refs.fileInput;
+      let file = input.files;
+      if (file && file[0]) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.formData.image = e.target.result;
+        };
+        reader.readAsDataURL(file[0]);
+        this.$emit("input", file[0]);
+      }
+    },
+    async onSubmit() {
       console.log(this.formData);
+      await this.axios.put(
+        this.oneRecipe + "/edit/recipe/" + this.formData.slug + "/",
+        this.formData
+      );
     },
   },
 };
@@ -258,7 +304,6 @@ export default {
 
 <style lang="sass" scoped>
 // .one-recipe-hero
-
 
 .one-recipe-container
   padding: .5rem 2rem
@@ -280,12 +325,15 @@ a
     padding: .5rem .5rem .5rem 2rem
     margin-right: auto
 
-.image-container
-  img
-    object-fit: cover
-    width: 100%
-    height: 300px
-    border-radius: 5px
+.imagePreviewWrapper 
+  width: 100%
+  height: 300px
+  display: block
+  cursor: pointer
+  border-radius: 5px
+  margin: 0 auto 30px
+  background-size: cover
+  background-position: center center
 
 .recipe-title
   margin: 2rem 0
