@@ -25,12 +25,16 @@ export default {
   text-align: center;
   color: #2c3e50;
   background-color: #efeeee;
+  display: flex; 
+  flex-direction: column; 
+  height: 100%; 
 }
 
 html,body{
   font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 #nav {

@@ -20,4 +20,6 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.home
+  flex: 1 0
 </style>
