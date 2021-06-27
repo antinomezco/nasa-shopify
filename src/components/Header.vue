@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="header">
     <div class="recipe-hero">
       <!-- b-back, bg and ui are in 3 separate, but combined layers, on top of each other, check css for details  -->
       <div class="bg-back"></div>
