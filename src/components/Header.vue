@@ -96,8 +96,6 @@ export default {
 // Header links
 .header
   text-align: right
-  margin-right: 1rem
-  padding: 0 1rem
   ul
     color: white
     padding: 0 1rem
