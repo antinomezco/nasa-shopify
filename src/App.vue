@@ -24,7 +24,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-color: #efeeee;
   display: flex; 
   flex-direction: column; 
   height: 100%; 
@@ -35,6 +34,7 @@ html,body{
   margin: 0;
   padding: 0;
   height: 100%;
+  background-color: #efeeee;
 }
 
 #nav {
