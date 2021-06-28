@@ -35,7 +35,7 @@ html,body{
   padding: 0;
   height: 100%;
   background-color: #efeeee;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 }
 
 #nav {

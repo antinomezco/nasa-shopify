@@ -2,7 +2,7 @@
   <div class="one-recipe-hero">
     <div class="one-recipe-container">
       <router-link to="/">
-        <img class="hat" src="../assets/chef.png"/>
+        <img class="hat" src="../assets/chef.png" />
       </router-link>
       <div class="image-container">
         <img :src="`${this.data.image}`" alt="" />
@@ -15,18 +15,24 @@
         <div class="recipe-minutia" v-if="!loading">
           <div class="recipe-minutia-left">
             <div class="category">
-              <span class="recipe-minutia-title">Category: </span>{{ this.data.food_category.food_category_name }}
+              <span class="recipe-minutia-title">Category: </span
+              >{{ this.data.food_category.food_category_name }}
             </div>
             <div class="added-by">
-              <span class="recipe-minutia-title">Added by: </span>{{ this.data.user.username }}
+              <span class="recipe-minutia-title">Added by: </span
+              >{{ this.data.user.username }}
             </div>
           </div>
           <div class="recipe-minutia-right">
             <div class="time">
-              <span class="recipe-minutia-title">Prep time: </span> {{ this.data.prep_time }} | <span class="recipe-minutia-title">Cook time: </span>{{ this.data.cook_time }}
+              <span class="recipe-minutia-title">Prep time: </span>
+              {{ this.data.prep_time }} |
+              <span class="recipe-minutia-title">Cook time: </span
+              >{{ this.data.cook_time }}
             </div>
             <div class="meal">
-              <span class="recipe-minutia-title">Meal: </span>{{ this.data.course.course_name}} 
+              <span class="recipe-minutia-title">Meal: </span
+              >{{ this.data.course.course_name }}
             </div>
           </div>
         </div>
@@ -70,6 +76,8 @@
           </div>
         </div>
       </div>
+      <button @click="checkUser">Edit Recipe</button>
+      <div v-if="errorMessage">Only the logged in user who added this recipe can edit it</div>
     </div>
   </div>
 </template>
@@ -83,6 +91,8 @@ export default {
     return {
       oneRecipe: "https://cookingdb.herokuapp.com/recipe/",
       data: [],
+      loading: null,
+      errorMessage: false
     };
   },
   async created() {
@@ -107,6 +117,19 @@ export default {
 
     this.loading = false;
   },
+  methods: {
+    checkUser() {
+      if(this.$auth.user &&
+        this.CryptoJS.SHA1(this.$auth.user.sub).toString() ===
+          this.data.user.sub) {
+            this.$router.push("/recipe/edit/" + this.data.slug)
+          }
+      else {
+        this.errorMessage = true;
+        setTimeout(function(){ this.errorMessage = false;}, 2000);
+      }
+    }
+  }
 };
 </script>
 
@@ -125,7 +148,7 @@ export default {
 a
   position: absolute
   top: 2rem // adds padding on the top
-  display: block //makes it align to the left 
+  display: block //makes it align to the left
   .hat
     height: 75px
     width: 75px
@@ -188,6 +211,21 @@ hr
 
 .recipe-notes
   padding: 1rem
+
+button
+  /* remove default button behavior */
+  appearance:none
+  -webkit-appearance:none
+
+  /* button styles */
+  padding:10px
+  margin: 0 5px
+  border:none
+  background-color: darkred
+  color:#fff
+  font-weight:600
+  border-radius:5px
+  width:25%
 
 @media screen and (max-width: 760px)
   .one-recipe-container

@@ -21,5 +21,5 @@ export default {
 
 <style lang="sass" scoped>
 .home
-  flex: 1 0
+  flex: 1 0  
 </style>

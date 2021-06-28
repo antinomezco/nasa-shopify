@@ -100,7 +100,7 @@ export default {
     color: white
     padding: 0 1rem
     font-size: 90%
-    margin: 1.6rem -.5rem
+    margin: 1.6rem .5rem
     display: flex
     justify-content: flex-end
     li

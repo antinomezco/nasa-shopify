@@ -21,7 +21,7 @@ const routes = [
     beforeEnter: authenticationGuard,
   },
   {
-    path: '/edit/:slug',
+    path: '/recipe/edit/:slug',
     name: 'EditRecipe',
     props: true,
     component: EditRecipe,
