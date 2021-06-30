@@ -385,7 +385,7 @@ export default {
       }
       console.log("postRecipe() this.formData.image: ", this.formData.image);
       await this.axios.post(this.oneRecipe + "/add_recipe/", this.formData);
-      // setTimeout(this.redirect, 2000);
+      setTimeout(this.redirect, 2000);
     },
     previewImage(event) {
       this.imageAdded = true;
