@@ -230,7 +230,9 @@
             </div>
           </div>
         </div>
-        <button type="submit" :disabled="invalid" @click="onSubmit">Submit</button>
+        <button type="submit" :disabled="invalid" @click="onSubmit">
+          Submit
+        </button>
         <button @click="clear">
           Clear</button
         ><br />
@@ -356,6 +358,7 @@ export default {
         self.formData[key] = "";
       });
       this.formData.image = require("../assets/placeholder.png");
+      console.log("clear()", this.formData.image);
     },
     redirect() {
       this.$router.replace({ path: `/recipe/${this.formData.slug}` });
@@ -371,6 +374,7 @@ export default {
         reader.onload = (e) => {
           this.formData.image = e.target.result;
         };
+        console.log("pickfile()", this.formData.image);
         reader.readAsDataURL(file[0]);
         this.$emit("input", file[0]);
       }
@@ -379,22 +383,16 @@ export default {
       if (!this.imageAdded) {
         this.formData.image = require("../assets/placeholder.png");
       }
-      console.log(this.formData);
+      console.log("postRecipe() this.formData.image: ", this.formData.image);
       await this.axios.post(this.oneRecipe + "/add_recipe/", this.formData);
-      setTimeout(this.redirect, 2000);
+      // setTimeout(this.redirect, 2000);
     },
     previewImage(event) {
       this.imageAdded = true;
       this.imageData = event.target.files[0];
+      console.log("previewImage()", this.formData.image);
     },
     onUpload() {
-      // this.image = null;
-      try {
-        this.postRecipe();
-      } catch {
-        console.log("FORMDATA ERROR");
-        return;
-      }
       const storageRef = firebase
         .storage()
         .ref(
@@ -403,6 +401,7 @@ export default {
           ).toString()}/${this.CryptoJS.SHA1(this.formData.slug).toString()}`
         )
         .put(this.imageData);
+      console.log("storageref", this.formData.image);
       storageRef.on(
         `state_changed`,
         (snapshot) => {
@@ -417,7 +416,9 @@ export default {
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.formData.image = url;
             console.log(url);
-            console.log(this.formData);
+            console.log("end on upload()", this.formData.image);
+          }).then((url) => {
+            this.postRecipe();
           });
         }
       );
