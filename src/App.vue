@@ -38,16 +38,7 @@ html,body{
   // overflow-x: hidden;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.one-recipe-hero, .error-hero {
+  flex: 1 0;
 }
 </style>

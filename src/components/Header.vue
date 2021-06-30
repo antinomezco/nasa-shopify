@@ -21,12 +21,14 @@
               La calavería
             </p>
             <p class="desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. 
+              This is a website created to test my abilities as a web developer.
+              The frontend is made made with VueJS without using any component
+              library, just CSS. In addition the following packages are used: 
+              dotenv (for storing environmental variables), firebase (for 
+              storing images), auth0 (for authentication), lodash (for its 
+              debounce function), vee-validate (for forms), axios (to connect 
+              to my own API) and vue-router (to navigate between different pages
+              and for authentication guard with auth0).
             </p>
             <p class="signature">
               <img
@@ -36,12 +38,9 @@
               />
             </p>
             <div>
-              <a href="" class="submit">
+              <router-link to="/addrecipe" class="submit">
                 Submit Recipe
-              </a>
-              <a href="" class="random">
-                Random
-              </a>
+              </router-link>
             </div>
           </div>
         </div>

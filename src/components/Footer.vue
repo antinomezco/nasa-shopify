@@ -5,19 +5,24 @@
         <div class="about">
           <strong>About</strong>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet
-            commodo nulla facilisi nullam vehicula. Sodales ut eu sem integer
-            vitae justo. Mauris ultrices eros in cursus turpis massa tincidunt
-            dui ut.
+            This footer doesn't have any actual function, it just makes the 
+            website look better by having it. In addition, the links to the side
+            don't actually work, they're currently placeholders to show how
+            they could look. If needed, I could extend the functionality of the
+            website to include such things, but this is just a simple show of
+            a CRUD website at the moment. For the next paragraph, I'll just 
+            repeat whatever I put in the header: 
           </p>
 
           <p>
-            Lectus urna duis convallis convallis tellus id interdum. Iaculis at
-            erat pellentesque adipiscing commodo elit at. Proin sed libero enim
-            sed faucibus turpis in. Gravida dictum fusce ut placerat. Tincidunt
-            arcu non sodales neque sodales ut etiam. Id aliquet lectus proin
-            nibh nisl condimentum id venenatis a.
+            This is a website created to test my abilities as a web developer.
+            The frontend is made made with VueJS without using any component
+            library, just CSS. In addition the following packages are used: 
+            dotenv (for storing environmental variables), firebase (for 
+            storing images), auth0 (for authentication), lodash (for its 
+            debounce function), vee-validate (for forms), axios (to connect 
+            to my own API) and vue-router (to navigate between different pages
+            and for authentication guard with auth0).
           </p>
         </div>
         <div class="links-site">

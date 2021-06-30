@@ -1,5 +1,10 @@
 <template>
-  <div class="one-recipe-hero">
+  <div class="one-recipe-hero" v-if="loading">
+    <slot name="loading">
+      <Spinner />
+    </slot>
+  </div>
+  <div v-else class="one-recipe-hero">
     <div class="one-recipe-container">
       <router-link to="/">
         <img class="hat" src="../assets/chef.png" />
@@ -18,17 +23,23 @@
               <span class="recipe-minutia-title">Category: </span
               >{{ this.data.food_category.food_category_name }}
             </div>
+            <div class="cuisine">
+              <span class="recipe-minutia-title">Cuisine: </span
+              >{{ this.data.cuisine.cuisine_name }}
+            </div>
             <div class="added-by">
               <span class="recipe-minutia-title">Added by: </span
-              >{{ this.data.user.username }}
+              >{{ this.data.first_name }}
             </div>
           </div>
           <div class="recipe-minutia-right">
             <div class="time">
-              <span class="recipe-minutia-title">Prep time: </span>
-              {{ this.data.prep_time }} |
-              <span class="recipe-minutia-title">Cook time: </span
-              >{{ this.data.cook_time }}
+              <div >
+                <span class="recipe-minutia-title">Prep time:</span> {{ this.data.prep_time }}
+              </div>
+              <div>
+                 <span class="recipe-minutia-title">Cook time:</span> {{ this.data.cook_time }}
+              </div>
             </div>
             <div class="meal">
               <span class="recipe-minutia-title">Meal: </span
@@ -46,7 +57,7 @@
                 Ingredients for {{ data.servings }} servings
               </p>
               <p
-                v-for="(ing, index) in data.ingredients_text.split('\r\n')"
+                v-for="(ing, index) in data.ingredients_text.split('\n')"
                 :key="index"
                 class="ingredients-text"
               >
@@ -56,7 +67,7 @@
             <div class="recipe-directions" v-if="!loading">
               <p class="directions-title">Directions</p>
               <p
-                v-for="(dir, index) in data.recipe_steps.split('\r\n')"
+                v-for="(dir, index) in data.recipe_steps.split('\n\n')"
                 :key="index"
                 class="recipe-steps"
               >
@@ -76,23 +87,27 @@
           </div>
         </div>
       </div>
-      <button @click="checkUser">Edit Recipe</button>
-      <div v-if="errorMessage">Only the logged in user who added this recipe can edit it</div>
+      <button @click="editPageGo">Edit Recipe</button>
     </div>
   </div>
 </template>
 
 <script>
+import Spinner from "@/components/Spinner.vue";
 export default {
+  components: {
+    Spinner,
+  },
   props: {
     slug: { required: true },
   },
   data() {
     return {
-      oneRecipe: "https://cookingdb.herokuapp.com/recipe/",
+      // oneRecipe: "https://cookingdb.herokuapp.com/recipe/",
+      oneRecipe: process.env.VUE_APP_LOCAL_DB + "/recipe/",
       data: [],
       loading: null,
-      errorMessage: false
+      errorMessage: false,
     };
   },
   async created() {
@@ -118,16 +133,8 @@ export default {
     this.loading = false;
   },
   methods: {
-    checkUser() {
-      if(this.$auth.user &&
-        this.CryptoJS.SHA1(this.$auth.user.sub).toString() ===
-          this.data.user.sub) {
-            this.$router.push("/recipe/edit/" + this.data.slug)
-          }
-      else {
-        this.errorMessage = true;
-        setTimeout(function(){ this.errorMessage = false;}, 2000);
-      }
+    editPageGo() {
+      this.$router.push("/recipe/edit/" + this.data.slug)
     }
   }
 };
@@ -214,18 +221,24 @@ hr
 
 button
   /* remove default button behavior */
-  appearance:none
-  -webkit-appearance:none
+  appearance: none
+  -webkit-appearance: none
 
   /* button styles */
-  padding:10px
+  padding: 10px
   margin: 0 5px
-  border:none
+  border: none
   background-color: darkred
-  color:#fff
-  font-weight:600
-  border-radius:5px
-  width:25%
+  color: #fff
+  font-weight: 600
+  border-radius: 5px
+  width: 25%
+button[disabled]
+  background-color: gray
+  opacity: .30
+button:active
+  box-shadow: 0 5px gray
+  transform: translateY(2px)
 
 @media screen and (max-width: 760px)
   .one-recipe-container

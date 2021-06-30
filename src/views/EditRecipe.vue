@@ -1,5 +1,16 @@
 <template>
-  <div class="one-recipe-hero">
+  <div class="one-recipe-hero" v-if="loading">
+    <slot name="loading">
+      <Spinner />
+    </slot>
+  </div>
+  <div class="error-hero" v-else-if="this.$auth.user.email != this.data.email">
+    <p>Can't edit other user's recipes</p>
+    <p>Please click the button below to be redirected to the home page</p>
+    <button @click="redirectHome">Main Page</button>
+  </div>
+  <div v-else class="one-recipe-hero">
+    <!-- ValidationObserver from vee-validate used for correct form validation -->
     <ValidationObserver v-slot="{ handleSubmit }">
       <form
         @submit.prevent="handleSubmit(onUpload)"
@@ -8,12 +19,19 @@
         <router-link to="/">
           <img class="hat" src="../assets/chef.png" />
         </router-link>
+        <!--grabs the current image stored in the API
+            if another file is chosen and submitted, it's replaced
+            otherwise, it keeps the previous image -->
         <div class="image-container">
           <div
-            class="imagePreviewWrapper"
+            class="image-preview-wrapper"
             :style="{ 'background-image': `url(${formData.image})` }"
             @click="selectImage"
-          ></div>
+          >
+            <div class="inside-image-preview-wrapper">
+              Click here to add or replace an image
+            </div>
+          </div>
           <input
             ref="fileInput"
             type="file"
@@ -57,9 +75,29 @@
                   <span>{{ errors[0] }}</span>
                 </validation-provider>
               </div>
+              <div class="cuisine">
+                <validation-provider
+                  v-slot="{ errors }"
+                  name="Cuisine"
+                  rules="required"
+                >
+                  <span class="recipe-minutia-title">Cuisine: </span>
+                  <select v-model="formData.cuisine">
+                    <option
+                      v-for="(item, index) in cuisineList.data"
+                      :key="index"
+                      :value="item.id"
+                      :selected="item.id === formData.cuisine.id"
+                    >
+                      {{ item.cuisine_name }}
+                    </option>
+                  </select>
+                  <span>{{ errors[0] }}</span>
+                </validation-provider>
+              </div>
               <div class="added-by">
                 <span class="recipe-minutia-title">Added by: </span
-                >{{ addedBy.username }}
+                >{{ data.first_name }}
               </div>
             </div>
             <div class="recipe-minutia-right">
@@ -198,23 +236,33 @@
           </div>
         </div>
         <button :disabled="correctUserCheck" type="submit">Submit</button>
-        <button :disabled="correctUserCheck" @click="deleteRecipe">Delete</button><br>
-        <progress max="100" :value.prop="uploadValue" v-show="uploadValue"></progress>
+        <button :disabled="correctUserCheck" @click="deleteRecipe">
+          Delete</button
+        ><br />
+        <progress
+          max="100"
+          :value.prop="uploadValue"
+          v-show="uploadValue"
+        ></progress>
       </form>
     </ValidationObserver>
   </div>
 </template>
 
 <script>
+import Spinner from "@/components/Spinner.vue";
 import firebase from "firebase";
 export default {
   props: {
     slug: { required: true },
   },
+  components: {
+    Spinner,
+  },
   data() {
     return {
-      oneRecipe: "https://cookingdb.herokuapp.com",
-      // oneRecipe: "http://127.0.0.1:8000",
+      // oneRecipe: "https://cookingdb.herokuapp.com",
+      oneRecipe: process.env.VUE_APP_LOCAL_DB,
       data: [],
       formData: {
         recipe_name: "",
@@ -233,11 +281,11 @@ export default {
       courseList: [],
       foodCategoryList: [],
       cuisineList: [],
-      addedBy: "",
       imageAdded: false,
       imageTemp: null,
       uploadValue: 0,
       correctUser: "",
+      loading: null,
     };
   },
   async created() {
@@ -256,18 +304,16 @@ export default {
         }
       );
       // Once results are in this.data, they're ready to use
+      // loads the information onto the required variables
       this.data = results.data;
-      this.addedBy = this.data.user;
-      // 
       this.formData = results.data;
+      // stores the image in a separate variable in case it doesn't get changed
       let imageTemp = this.formData.image;
       this.imageTemp = imageTemp;
-      let correctUser = this.formData.user.sub;
-      this.correctUser = correctUser
+      // fills in the selects
       this.formData.cuisine = this.data.cuisine.id;
       this.formData.food_category = this.data.food_category.id;
       this.formData.course = this.data.course.id;
-      this.formData.user = this.data.user.id;
       console.log("data: ", this.data);
     } catch (e) {
       console.log(e);
@@ -277,39 +323,23 @@ export default {
     this.loading = false;
   },
   async mounted() {
-    let preCuisine = await this.axios.get(this.oneRecipe + "/allcuisines", {
-      // in case there's headers needed, like for Django authentication
-      // headers: {
-      //   'Authorization': `token ${this.authToken}`
-      // }
-    });
+    // loads the select with the appropriate API info
+    let preCuisine = await this.axios.get(this.oneRecipe + "/allcuisines", {});
     this.cuisineList = preCuisine;
 
     let preFoodCategory = await this.axios.get(
       this.oneRecipe + "/allfoodcategories",
-      {
-        // in case there's headers needed, like for Django authentication
-        // headers: {
-        //   'Authorization': `token ${this.authToken}`
-        // }
-      }
+      {}
     );
     this.foodCategoryList = preFoodCategory;
 
-    // this.ingredientList = ingredients
-
-    let preCourses = await this.axios.get(this.oneRecipe + "/allcourses", {
-      // in case there's headers needed, like for Django authentication
-      // headers: {
-      //   'Authorization': `token ${this.authToken}`
-      // }
-    });
+    let preCourses = await this.axios.get(this.oneRecipe + "/allcourses", {});
     this.courseList = preCourses;
-
-    console.log("this.formData.image: ", this.formData.image);
-    console.log("this.imageTemp: ", this.imageTemp);
   },
   methods: {
+    redirectHome() {
+      this.$router.replace({ path: "/" });
+    },
     redirect() {
       this.$router.replace({ path: `/recipe/${this.formData.slug}` });
     },
@@ -344,49 +374,62 @@ export default {
       this.imageData = event.target.files[0];
     },
     onUpload() {
-      const storageRef = firebase
-        .storage()
-        .ref(
-          `${this.CryptoJS.SHA1(
-            this.$auth.user.sub
-          ).toString()}/${this.CryptoJS.SHA1(this.formData.slug).toString()}`
-        )
-        .put(this.imageData);
-      storageRef.on(
-        `state_changed`,
-        (snapshot) => {
-          this.uploadValue = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        },
-        (error) => {
-          console.log("ERROR: ", error.message);
-        },
-        () => {
-          this.uploadValue = 100;
-          storageRef.snapshot.ref.getDownloadURL().then((url) => {
-            this.formData.image = url;
-            console.log("url: ", url);
-            console.log("this.formData.image: ", this.formData.image);
-            this.putRecipe();
-          });
-        }
-      );
+      if (this.imageAdded) {
+        const storageRef = firebase
+          .storage()
+          .ref(
+            `${this.CryptoJS.SHA1(
+              this.$auth.user.sub
+            ).toString()}/${this.CryptoJS.SHA1(this.formData.slug).toString()}`
+          )
+          .put(this.imageData);
+        storageRef.on(
+          `state_changed`,
+          (snapshot) => {
+            this.uploadValue =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          },
+          (error) => {
+            console.log("ERROR: ", error.message);
+          },
+          () => {
+            this.uploadValue = 100;
+            storageRef.snapshot.ref.getDownloadURL().then((url) => {
+              this.formData.image = url;
+              console.log("url: ", url);
+              console.log("this.formData.image: ", this.formData.image);
+            });
+          }
+        );
+      }
+      this.putRecipe();
     },
     async deleteRecipe() {
-      // if(this.CryptoJS.SHA1(this.$auth.user.sub).toString() != this.correctUser){
-      // return alert("Cannot edit other user's recipes")
-      // }
       console.log("oneRecipe + /edit/recipe/" + this.formData.slug + "/");
-      await this.axios.delete(
-        this.oneRecipe + "/edit/recipe/" + this.formData.slug + "/"
-      );
-      setTimeout(this.$router.replace({ path: "/" }), 2000);
+      if (confirm("Are you sure you want to delete this recipe?")) {
+        firebase
+          .storage()
+          .ref(
+            `${this.CryptoJS.SHA1(
+              this.$auth.user.sub
+            ).toString()}/${this.CryptoJS.SHA1(this.formData.slug).toString()}`
+          )
+          .delete();
+        await this.axios.delete(
+          this.oneRecipe + "/edit/recipe/" + this.formData.slug + "/"
+        );
+        setTimeout(this.$router.replace({ path: "/" }), 1000);
+      }
     },
   },
   computed: {
     correctUserCheck() {
-      return this.CryptoJS.SHA1(this.$auth.user.sub).toString() != this.correctUser
-    }
-  }
+      if (this.$auth.email == this.data.email)
+        return (
+          this.CryptoJS.SHA1(this.$auth.user.sub).toString() != this.correctUser
+        );
+    },
+  },
 };
 </script>
 
@@ -412,7 +455,7 @@ a
     padding: .5rem .5rem .5rem 2rem
     margin-right: auto
 
-.imagePreviewWrapper
+.image-preview-wrapper
   width: 100%
   height: 300px
   display: block
@@ -420,7 +463,17 @@ a
   border-radius: 5px
   margin: 0 auto 30px
   background-size: cover
+  border: 1px solid darkred
   background-position: center center
+  .inside-image-preview-wrapper
+    z-index: 5
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: flex-end
+    color: white
+    text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000
+    font-weight: 700
 
 .one-recipe-hero
   padding-bottom: .5rem
@@ -482,7 +535,6 @@ hr
 
 input
   width: 250px
-  padding:5px
   border: 2px solid #eee
 
 input, textarea, select
@@ -502,21 +554,24 @@ select
 
 button
   /* remove default button behavior */
-  appearance:none
-  -webkit-appearance:none
+  appearance: none
+  -webkit-appearance: none
 
   /* button styles */
-  padding:10px
+  padding: 10px
   margin: 0 5px
-  border:none
+  border: none
   background-color: darkred
   color:#fff
-  font-weight:600
-  border-radius:5px
-  width:25%
+  font-weight: 600
+  border-radius: 5px
+  width: 25%
 button[disabled]
   background-color: gray
   opacity: .30
+button:active
+  box-shadow: 0 5px gray
+  transform: translateY(2px)
 
 @media screen and (max-width: 760px)
   .one-recipe-container
@@ -536,4 +591,11 @@ button[disabled]
     flex-direction: column
   .recipe-minutia-right
     padding-top: 1rem
+
+.error-hero
+  font-family: Inter
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
 </style>

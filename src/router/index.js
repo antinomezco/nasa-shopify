@@ -33,11 +33,6 @@ const routes = [
     props: true,
     component: OneRecipe,
   },
-  // {
-  //   path: '*',
-  //   name: 'Home',
-  //   component: Home
-  // },
 ]
 
 const router = new VueRouter({
