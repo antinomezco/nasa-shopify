@@ -57,7 +57,6 @@
           // Once results are in this.data, they're used by Pagination.vue as a slot in <template #loaded="{data}">
           this.data = results.data;
         } catch(e) {
-          console.log(e);
           this.error = "This resource is not loading"
         }
 

@@ -303,7 +303,6 @@ export default {
       // stores the image in a separate variable in case it doesn't get changed
       // stores the user id in a separate variable in case to use in a comparison
     } catch (e) {
-      console.log(e);
       this.error = "This resource is not loading";
     }
 
@@ -361,7 +360,6 @@ export default {
         self.formData[key] = "";
       });
       this.formData.image = require("../assets/placeholder.png");
-      console.log("clear()", this.formData.image);
     },
     redirect() {
       this.$router.replace({ path: `/recipe/${this.formData.slug}` });
@@ -377,7 +375,6 @@ export default {
         reader.onload = (e) => {
           this.formData.image = e.target.result;
         };
-        console.log("pickfile()", this.formData.image);
         reader.readAsDataURL(file[0]);
         this.$emit("input", file[0]);
       }
@@ -386,14 +383,12 @@ export default {
       if (!this.imageAdded) {
         this.formData.image = require("../assets/placeholder.png");
       }
-      console.log("postRecipe() this.formData.image: ", this.formData.image);
       await this.axios.post(this.oneRecipe + "/add_recipe/", this.formData);
       setTimeout(this.redirect, 2000);
     },
     previewImage(event) {
       this.imageAdded = true;
       this.imageData = event.target.files[0];
-      console.log("previewImage()", this.formData.image);
     },
     onUpload() {
       const storageRef = firebase
@@ -404,7 +399,6 @@ export default {
           ).toString()}/${this.CryptoJS.SHA1(this.formData.slug).toString()}`
         )
         .put(this.imageData);
-      console.log("storageref", this.formData.image);
       storageRef.on(
         `state_changed`,
         (snapshot) => {
@@ -418,8 +412,6 @@ export default {
           this.uploadValue = 100;
           storageRef.snapshot.ref.getDownloadURL().then((url) => {
             this.formData.image = url;
-            console.log(url);
-            console.log("end on upload()", this.formData.image);
           }).then((url) => {
             this.postRecipe();
           });

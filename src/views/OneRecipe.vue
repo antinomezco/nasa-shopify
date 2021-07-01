@@ -67,7 +67,7 @@
             <div class="recipe-directions" v-if="!loading">
               <p class="directions-title">Directions</p>
               <p
-                v-for="(dir, index) in data.recipe_steps.split('\n\n')"
+                v-for="(dir, index) in data.recipe_steps.split('\n')"
                 :key="index"
                 class="recipe-steps"
               >
@@ -78,7 +78,7 @@
           <div class="recipe-notes" v-if="!loading">
             <p class="notes-title" v-if="data.recipe_notes">Notes</p>
             <p
-              v-for="note in data.recipe_notes.split('\r\n')"
+              v-for="note in data.recipe_notes.split('\n')"
               :key="note"
               class="notes-steps"
             >
@@ -124,7 +124,6 @@ export default {
       });
       // Once results are in this.data, they're ready to use
       this.data = results.data;
-      console.log("data: ", this.data);
     } catch (e) {
       console.log(e);
       this.error = "This resource is not loading";

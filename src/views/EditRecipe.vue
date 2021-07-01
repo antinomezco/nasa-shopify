@@ -315,10 +315,11 @@ export default {
       this.formData.cuisine = this.data.cuisine.id;
       this.formData.food_category = this.data.food_category.id;
       this.formData.course = this.data.course.id;
-      console.log("data: ", this.$auth.user);
       if(!this.$auth.user.given_name) {
         this.formData.first_name = this.$auth.user.email
-      }
+      } else {
+        this.formData.first_name = this.$auth.user.given_name;
+      } 
     } catch (e) {
       console.log(e);
       this.error = "This resource is not loading";
@@ -366,7 +367,6 @@ export default {
       if (!this.imageAdded) {
         this.formData.image = this.imageTemp;
       }
-      console.log(this.formData);
       await this.axios.put(
         this.oneRecipe + "/edit/recipe/" + this.formData.slug + "/",
         this.formData
@@ -400,8 +400,6 @@ export default {
             this.uploadValue = 100;
             storageRef.snapshot.ref.getDownloadURL().then((url) => {
               this.formData.image = url;
-              console.log("url: ", url);
-              console.log("this.formData.image: ", this.formData.image);
             });
           }
         );
@@ -409,7 +407,6 @@ export default {
       this.putRecipe();
     },
     async deleteRecipe() {
-      console.log("oneRecipe + /edit/recipe/" + this.formData.slug + "/");
       if (confirm("Are you sure you want to delete this recipe?")) {
         firebase
           .storage()
