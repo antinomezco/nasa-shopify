@@ -294,7 +294,7 @@ export default {
       this.loading = true; //while true, the loading slot will be active
       // Once results are in this.data, they're ready to use
       // loads the information onto the required variables
-      if(!this.$auth.given_name) {
+      if(!this.$auth.user.given_name) {
         this.formData.first_name = this.$auth.user.email
       } else {
         this.formData.first_name = this.$auth.user.given_name;

@@ -316,7 +316,7 @@ export default {
       this.formData.food_category = this.data.food_category.id;
       this.formData.course = this.data.course.id;
       console.log("data: ", this.$auth.user);
-      if(!this.$auth.given_name) {
+      if(!this.$auth.user.given_name) {
         this.formData.first_name = this.$auth.user.email
       }
     } catch (e) {
