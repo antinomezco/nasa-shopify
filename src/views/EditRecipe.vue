@@ -6,7 +6,7 @@
   </div>
   <div class="error-hero" v-else-if="this.$auth.user.email != this.data.email">
     <p>Can't edit other user's recipes</p>
-    <p>Please click the button below to be redirected to the home page</p>
+    <p>Please click the button below to be redirected to the main page</p>
     <button @click="redirectHome">Main Page</button>
   </div>
   <div v-else class="one-recipe-hero">
@@ -270,6 +270,7 @@ export default {
         cook_time: "",
         servings: "",
         image: "",
+        first_name: "",
         recipe_description: "",
         ingredients_text: "",
         recipe_steps: "",
@@ -314,7 +315,10 @@ export default {
       this.formData.cuisine = this.data.cuisine.id;
       this.formData.food_category = this.data.food_category.id;
       this.formData.course = this.data.course.id;
-      console.log("data: ", this.data);
+      console.log("data: ", this.$auth.user);
+      if(!this.$auth.given_name) {
+        this.formData.first_name = this.$auth.user.email
+      }
     } catch (e) {
       console.log(e);
       this.error = "This resource is not loading";
@@ -434,6 +438,9 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
+.error-hero
+  padding: 10% 0
 
 .one-recipe-container
   padding: .5rem 2rem

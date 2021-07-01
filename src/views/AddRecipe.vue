@@ -294,8 +294,11 @@ export default {
       this.loading = true; //while true, the loading slot will be active
       // Once results are in this.data, they're ready to use
       // loads the information onto the required variables
-      console.log("AddedBy: ", this.$auth.user.email);
-      this.formData.first_name = this.$auth.user.given_name;
+      if(!this.$auth.given_name) {
+        this.formData.first_name = this.$auth.user.email
+      } else {
+        this.formData.first_name = this.$auth.user.given_name;
+      } 
       this.formData.email = this.$auth.user.email;
       // stores the image in a separate variable in case it doesn't get changed
       // stores the user id in a separate variable in case to use in a comparison

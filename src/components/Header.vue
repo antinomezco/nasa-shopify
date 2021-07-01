@@ -21,14 +21,21 @@
               La calavería
             </p>
             <p class="desc">
+              Inspired by <span><a href="http://www.theskullery.net">The Skullery</a></span>
+              as to combine several of my passions, web development, photography and cooking.
+            </p>
+            <p class="desc">
               This is a website created to test my abilities as a web developer.
-              The frontend is made made with VueJS without using any component
-              library, just CSS. In addition the following packages are used: 
-              dotenv (for storing environmental variables), firebase (for 
+              The frontend is made with VueJS without using any component
+              library, just CSS. In addition the following packages are used: firebase (for 
               storing images), auth0 (for authentication), lodash (for its 
               debounce function), vee-validate (for forms), axios (to connect 
               to my own API) and vue-router (to navigate between different pages
               and for authentication guard with auth0).
+            </p>
+            <p class="desc">
+              The backend was made from scratch using Django, custom made for this
+              particular website.
             </p>
             <p class="signature">
               <img
@@ -71,6 +78,8 @@ export default {
 
 // Layered image and color transparency
 
+a
+  color: white
 
 .bg
   background-repeat: no-repeat
