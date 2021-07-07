@@ -189,7 +189,7 @@ hr
   font-weight: 700
 
 .recipe-details
-  margin: 2rem 0
+  margin-top: 2rem 
   text-align: left
 
 .recipe-ingredients-directions
@@ -225,7 +225,7 @@ button
 
   /* button styles */
   padding: 10px
-  margin: 0 5px
+  margin: 0 5px 1rem 5px
   border: none
   background-color: darkred
   color: #fff

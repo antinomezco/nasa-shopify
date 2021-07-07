@@ -563,7 +563,7 @@ button
 
   /* button styles */
   padding: 10px
-  margin: 0 5px
+  margin: 1rem 5px
   border: none
   background-color: darkred
   color:#fff
