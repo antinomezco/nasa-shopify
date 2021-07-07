@@ -524,7 +524,7 @@ hr
 
 input
   width: 250px
-  padding:5px
+  padding: 5px
   border: 2px solid #eee
 
 input, textarea, select
