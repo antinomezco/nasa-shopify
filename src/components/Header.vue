@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="recipe-hero">
+    <div class="hero">
       <!-- b-back, bg and ui are in 3 separate, but combined layers, on top of each other, check css for details  -->
       <div class="bg-back"></div>
       <div
@@ -47,7 +47,7 @@
 <style lang="sass" scoped>
 // Main component css
 
-.recipe-hero
+.hero
   position: relative
 
 // Layered image and color transparency

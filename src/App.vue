@@ -35,8 +35,4 @@ html,body{
   height: 100%;
   background-color: #efeeee;
 }
-
-.one-recipe-hero, .error-hero {
-  flex: 1 0;
-}
 </style>

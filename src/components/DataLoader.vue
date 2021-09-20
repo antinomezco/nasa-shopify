@@ -31,11 +31,11 @@
     methods: {
       async findData(){
         try {
-          // Using :endpoint="web" prop from Pagination.vue, tries to load results from the database through Axios
+          // Using :endpoint="web" prop from CardContainer.vue, tries to load results from the database through Axios
           this.error = null;
           this.loading = true; //while true, the loading slot will be active
           let results = await this.axios.get(this.endpoint);
-          // Once results are in this.data, they're used by Pagination.vue
+          // Once results are in this.data, they're used by CardContainer.vue
           this.data = results.data;
           console.log(this.data)
         } catch(e) {
@@ -53,7 +53,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -1,19 +1,19 @@
 <template>
   <div class="home">
     <Header />
-    <Pagination />
+    <CardContainer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Pagination from '@/components//Pagination.vue'
+import CardContainer from '@/components//CardContainer.vue'
 import Header from '@/components//Header.vue'
 
 export default {
   name: 'Home',
   components: {
-    Pagination,
+    CardContainer,
     Header,
   }
 }
