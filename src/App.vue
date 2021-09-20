@@ -1,5 +1,5 @@
 <template>
-  <Spinner v-if="$auth.isLoading" />
+  <Spinner v-if="false" />
   <div v-else id="app">
     <router-view/>
     <Footer />

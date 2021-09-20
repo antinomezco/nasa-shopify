@@ -6,50 +6,18 @@
           <strong>About</strong>
           <p>
             This footer doesn't have any actual function, it just makes the 
-            website look better by having it. In addition, the links to the side
-            don't actually work, they're currently placeholders to show how
-            they could look. If needed, I could extend the functionality of the
-            website to include such things, but this is just a simple show of
-            a CRUD website at the moment. For the next paragraph, I'll just 
-            repeat whatever I put in the header: 
+            website look better by having it.
           </p>
 
           <p>
             This is a website created to test my abilities as a web developer.
             The frontend is made made with VueJS without using any component
-            library, just CSS. In addition the following packages are used: 
-            dotenv (for storing environmental variables), firebase (for 
-            storing images), auth0 (for authentication), lodash (for its 
-            debounce function), vee-validate (for forms), axios (to connect 
-            to my own API) and vue-router (to navigate between different pages
-            and for authentication guard with auth0).
+            library, just CSS and the axios package.
           </p>
-        </div>
-        <div class="links-site">
-          <div class="links">
-            <div><strong>Links</strong></div>
-            <ul>
-              <li>Stats</li>
-              <li>Contact</li>
-              <li>Privacy</li>
-              <li>Favorites</li>
-            </ul>
-          </div>
-          <div class="site">
-            <div><strong>Site</strong></div>
-            <ul>
-              <li>Categories</li>
-              <li>Cuisines</li>
-              <li>Chefs</li>
-              <li>Meals</li>
-            </ul>
-          </div>
         </div>
       </div>
       <hr />
       <div class="downer">
-        <p>Website design inspired by <a target="_blank" href="http://theskullery.net" >theskullery.net</a></p>
-        <p>It was made, with effort</p>
         <p>Constantino Saldana, at <a target="_blank" href="http://csaldana.xyz">csaldana.xyz</a></p>
       </div>
     </div>
@@ -92,7 +60,7 @@
     bottom: 0
     left: 0
     opacity: 0.3
-    background-image: url("../assets/chef.png")
+    background-image: url("../assets/moon.png")
     background-repeat: no-repeat
     background-position: center
     background-size: 100px 100px

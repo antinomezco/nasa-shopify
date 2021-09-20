@@ -5,7 +5,7 @@
         <Spinner />
 
       </slot>
-      <slot name="loading-message">Loading recipes...</slot>
+      <slot name="loading-message">Loading outer space...</slot>
     </div>
     <slot name="error" v-else-if="error">{{error}}</slot>
     <slot name="loaded" v-else :data="data" />
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-  import _ from 'lodash'
   import Spinner from '@/components/Spinner.vue';
   export default {
     data(){
@@ -29,18 +28,6 @@
     },
     created(){
       this.findData()
-      // Instead of updating the data string sent to the database each time the string changes, 
-      // it waits X amount of time before starting a function.
-      // https://lodash.com/docs/#debounce
-      this.updateEndpoint = _.debounce(function(){
-        this.findData();
-      }, 300)
-    },
-    watch: {
-      // Monitors the query which, with debounce, resets the timer in the function if there's an additional change during the alloted time.
-      endpoint: function(){
-        this.updateEndpoint();
-      }
     },
     methods: {
       async findData(){
@@ -56,6 +43,7 @@
           });
           // Once results are in this.data, they're used by Pagination.vue as a slot in <template #loaded="{data}">
           this.data = results.data;
+          console.log(this.data)
         } catch(e) {
           this.error = "This resource is not loading"
         }

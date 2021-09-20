@@ -5,70 +5,44 @@
       <div class="bg-back"></div>
       <div
         class="bg"
-        style="background-image: url('https://images.unsplash.com/photo-1523986371872-9d3ba2e2a389?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3VtbWVyJTIwZm9vZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80');"
+        style="background-image: url('https://images.unsplash.com/photo-1456154875099-97a3a56074d3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1400&q=80');"
       ></div>
       <div class="ui-container">
         <div class="header">
           <ul class="links-header">
-            <li v-if="!$auth.isAuthenticated" @click="login">Log in/Sign up</li>
-            <li v-else @click="logout">Log out</li>
           </ul>
         </div>
         <div class="main-hero">
-          <img class="hat" src="../assets/chef.png"/>
+          <img class="nasa" src="../assets/nasa.png"/>
           <div class="text-and-buttons">
             <p class="title">
-              La calavería
+              NASA - Shopify test
             </p>
             <p class="desc">
-              Inspired by <span><a href="http://www.theskullery.net">The Skullery</a></span>
-              as to combine several of my passions, web development, photography and cooking.
+              Coding exercise webpage that can pull images, and allow the user to “like” and “unlike” their favourite images.
             </p>
             <p class="desc">
-              This is a website created to test my abilities as a web developer.
-              The frontend is made with VueJS without using any component
-              library, just CSS. In addition the following packages are used: firebase (for 
-              storing images), auth0 (for authentication), lodash (for its 
-              debounce function), vee-validate (for forms), axios (to connect 
-              to my own API) and vue-router (to navigate between different pages
-              and for authentication guard with auth0).
+              Base features: 
             </p>
+            <ul>
+              <li>Fetch data from one of NASA’s APIs and display the resulting images</li>
+              <li>Display descriptive data for each image (for example: title, date, description, etc.)</li>
+              <li>Like an image</li>
+              <li>Unlike an image</li>
+            </ul>
             <p class="desc">
-              The backend was made from scratch using Django, custom made for this
-              particular website.
+              Extras: 
             </p>
-            <p class="signature">
-              <img
-                src="../assets/quill-drawing-a-line.png"
-                height="75px"
-                width="75px"
-              />
-            </p>
-            <div>
-              <router-link to="/addrecipe" class="submit">
-                Submit Recipe
-              </router-link>
-            </div>
+            <ul>
+              <li>Save likes if the user leaves or reloads the page</li>
+              <li>Add a loading state while we wait for NASA’s API to return data</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  methods: {
-    login() {
-      this.$auth.loginWithRedirect();
-    },
-    logout() {
-      this.$auth.logout();
-      this.$router.push({ path: "/" });
-    },
-  },
-};
-</script>
 
 <style lang="sass" scoped>
 // Main component css
@@ -83,7 +57,7 @@ a
 
 .bg
   background-repeat: no-repeat
-  background-attachment: center
+  background-attachment: fixed
   background-position: center
   background-size: cover
   top: 0
@@ -101,23 +75,6 @@ a
   left: 0
   position: absolute
 
-// Header links
-.header
-  text-align: right
-  ul
-    color: white
-    padding: 0 1rem
-    font-size: 90%
-    margin: 1.6rem .5rem
-    display: flex
-    justify-content: flex-end
-    li
-      list-style-type: none
-      padding: 0 1rem
-      cursor: pointer
-      
-
-
 // Images and text in header
 
 .ui-container
@@ -129,17 +86,23 @@ a
   display: flex
   flex-direction: column
   text-align: left
-  margin-top: -2rem
-  margin-bottom: 2rem
   padding-left: 1rem
-  .hat
-    padding: 0 0 0 .5rem
-    height: 75px
-    width: 75px
+  .nasa
+    padding: 0rem 0 0 .5rem
+    height: 160px
+    width: 175px
   .text-and-buttons
     margin: 1.25rem 1rem
     max-width: 600px
     line-height: 1.5rem
+    ul
+      color: white
+      padding: 0 1rem
+      font-size: 90%
+      margin: 1.6rem .5rem
+      display: flex
+      flex-direction: column
+      justify-content: flex-end
     .title
       font-weight: 100
       font-size: 2rem
@@ -153,39 +116,8 @@ a
     .title, .desc
       color: white
       text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000
-    .signature
-      -webkit-filter: invert(1)
-      filter: invert(1)
 
 @media screen and (max-width: 1088px)
   .main-hero
     padding-left: 0
-
-// Buttons
-
-.submit
-  font-weight: 500
-  margin-top: .5rem
-  display: inline-block
-  color: black
-  background: linear-gradient(to bottom,#CCCC00 0,#999900 100%)
-
-.submit:hover
-  background: linear-gradient(to bottom,#999900 0,#666600 100%)
-
-.submit, .random
-  border-radius: 5px
-  text-decoration: none
-  padding: .75rem 2rem
-  font-weight: 500
-
-.random
-  margin-left: 1rem
-  border: 1px solid white
-  color: white
-  background: 0 0
-
-.random:hover
-  background: white
-  color: black
 </style>
