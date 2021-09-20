@@ -9,7 +9,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "dotenv": "^8.2.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-material-design-icons": "^4.13.0",

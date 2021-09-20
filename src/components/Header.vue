@@ -68,7 +68,7 @@ a
   mix-blend-mode: multiply
   filter: grayscale(100%)
 .bg-back
-  background: red
+  background: orange
   width: 100%
   height: 100%
   top: 0
@@ -106,7 +106,6 @@ a
     .title
       font-weight: 100
       font-size: 2rem
-      // max-width: 25rem
       line-height: 1.2
       width: 100%
       margin-top: 0
