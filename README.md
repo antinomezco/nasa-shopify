@@ -1,35 +1,15 @@
-# cookingscratch
+# NASA - Shopify test
 
-Simple recipe search website, inspired by The Skullery
+Coding exercise webpage that can pull images, and allow the user to “like” and “unlike” their favourite images.
 
-http://theskullery.net
+## Base features:
 
-Uses Vue Router, Axios, lodash and dotenv.
+    Fetch data from one of NASA’s APIs and display the resulting images
+    Display descriptive data for each image (for example: title, date, description, etc.)
+    Like an image
+    Unlike an image
 
-Recipe database connection is through REST to a custom API created in Django.
+## Extras:
 
-Features to add
-
-1. CRUD
-  C) Pending
-  R) Can now click on a recipe to get its details
-  U) Pending
-  D) Pending
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+    Save likes if the user leaves or reloads the page
+    Add a loading state while we wait for NASA’s API to return data

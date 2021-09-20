@@ -3,7 +3,6 @@
     <div v-if="loading">
       <slot name="loading">
         <Spinner />
-
       </slot>
       <slot name="loading-message">Loading outer space...</slot>
     </div>
@@ -32,16 +31,11 @@
     methods: {
       async findData(){
         try {
-          // Using :endpoint="`${web}?recipe_name=${recipeName}`" prop from Pagination.vue, tries to load results from the database through Axios
+          // Using :endpoint="web" prop from Pagination.vue, tries to load results from the database through Axios
           this.error = null;
           this.loading = true; //while true, the loading slot will be active
-          let results = await this.axios.get(this.endpoint, {
-            // in case there's headers needed, like for Django authentication
-            // headers: {
-            //   'Authorization': `token ${this.authToken}`
-            // }
-          });
-          // Once results are in this.data, they're used by Pagination.vue as a slot in <template #loaded="{data}">
+          let results = await this.axios.get(this.endpoint);
+          // Once results are in this.data, they're used by Pagination.vue
           this.data = results.data;
           console.log(this.data)
         } catch(e) {
@@ -55,11 +49,6 @@
       endpoint: {
         type: String,
         required: true
-      },
-      // authToken not needed at the moment
-      authToken: {
-        type: String,
-        required: false
       }
     }
   }
