@@ -35,7 +35,6 @@ html,body{
   padding: 0;
   height: 100%;
   background-color: #efeeee;
-  // overflow-x: hidden;
 }
 
 .one-recipe-hero, .error-hero {
