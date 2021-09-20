@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <footer class="footer">
     <div class="footer-container">
       <div class="upper">
         <div class="about">
@@ -21,7 +21,7 @@
         <p>Constantino Saldana, at <a target="_blank" href="http://csaldana.xyz">csaldana.xyz</a></p>
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <style lang="sass" scoped>
@@ -52,7 +52,7 @@
     position: relative
     line-height: 1.5
     font-size: .8rem
-  &::before // hat image behing the text with opacity
+  &::before // moon image behing the text with opacity
     content: ''
     position: absolute
     top: 0

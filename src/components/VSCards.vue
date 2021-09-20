@@ -1,7 +1,7 @@
 <template>
   <div v-if="items">
     <div class="card-container">
-      <div v-for="item in items" :key="item.id" class="card">
+      <article v-for="item in items" :key="item.id" class="card">
         <slot name="item" :item="item">
           <!-- pseudo image component contains all the code for dynamically showing the information in the database (item in items) -->
           <div
@@ -13,8 +13,8 @@
             alt=""
           >
             <div class="heart" @click="faveData(item.url)">
-              <div v-if="!faveItems.includes(item.url)"><unfilled-heart-icon/></div>
-              <div v-else><heart-icon /></div>
+              <div v-if="!faveItems.includes(item.url)"><unfilled-heart-icon title="Not Liked!" fillColor="red"/></div>
+              <div v-else><heart-icon title="Liked!" fillColor="red"/></div>
             </div>
             <div class="p-container">
               <p>{{ item.date }}</p>
@@ -26,7 +26,7 @@
             </div>
           </div>
         </slot>
-      </div>
+      </article>
     </div>
   </div>
 </template>

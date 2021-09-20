@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination-container">
+  <body class="pagination-container">
     <!-- Sends recipeName string to the database through DataLoader to query for the total amount of items returned -->
     <DataLoader :endpoint="web">
       <template #loaded>
@@ -20,7 +20,7 @@
         </DataLoader>
       </template>
     </DataLoader>
-  </div>
+  </body>
 </template>
 
 <script>
