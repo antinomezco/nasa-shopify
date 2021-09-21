@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="hero">
+    <div class="hero-container">
       <!-- b-back, bg and ui are in 3 separate, but combined layers, on top of each other, check css for details  -->
       <div class="bg-back"></div>
       <div
@@ -8,10 +8,6 @@
         style="background-image: url('https://images.unsplash.com/photo-1456154875099-97a3a56074d3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1400&q=80');"
       ></div>
       <div class="ui-container">
-        <div class="header">
-          <ul class="links-header">
-          </ul>
-        </div>
         <div class="main-hero">
           <img class="nasa" src="../assets/nasa.png"/>
           <div class="text-and-buttons">
@@ -47,7 +43,7 @@
 <style lang="sass" scoped>
 // Main component css
 
-.hero
+.hero-container
   position: relative
 
 // Layered image and color transparency

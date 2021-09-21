@@ -11,8 +11,6 @@
 
           <p>
             This is a website created to test my abilities as a web developer.
-            The frontend is made made with VueJS without using any component
-            library, just CSS and the axios package.
           </p>
         </div>
       </div>
