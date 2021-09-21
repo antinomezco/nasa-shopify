@@ -2,6 +2,8 @@
 
 Coding exercise webpage that can pull images, and allow the user to “like” and “unlike” their favourite images.
 
+Netlify sample page of the code shown above is available [here](https://objective-leakey-2e92b9.netlify.app/) 
+
 ## Base features:
 
     Fetch data from one of NASA’s APIs and display the resulting images
